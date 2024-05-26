@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Multiple Image Upload with Preview and Delete Using Ajax Jquery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .preview-box {
+            display: inline-block;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            padding: 2px;
+            margin: 2px;
+            width: 100px;
+            height: 110px;
+        }
+
+        .preview img {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+        }
+
+        .gallery-button {
+            background-color: #7258db;
+            width: inherit;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Multiple Image Upload with Preview and Delete Using Ajax Jquery</h2>
+
+    <input type="file" id="file-input" multiple>
+    <div id="preview-container"></div>
+    <!-- <script src="script.js"></script> -->
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        $("#file-input").on("change", function () {
+            var files = $(this)[0].files;
+            $("#preview-container").empty();
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("<div class='preview-box'> <div class='preview'><img src='" + e.target.result + "'><button class='delete gallery-button' >Delete</button></div> </div>").appendTo("#preview-container");
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+        });
+        $("#preview-container").on("click", ".delete", function () {
+            $(this).parent(".preview").remove();
+            $("#file-input").val(""); // Clear input value if needed
+        });
+    });
+</script>

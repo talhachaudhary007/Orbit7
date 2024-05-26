@@ -1,0 +1,259 @@
+/*-------------------------------------------------------*/
+.btn-primary{
+    background-color: #0076f9;
+}
+.single-project-content{
+    /* color: yellowgreen; */
+}
+.single-project-content img{
+    height: 350px;
+    object-fit: cover;
+}
+.small-image-box{
+    margin: 15px 0px 15px 0px;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+}
+.small-image-box a{
+    margin-left: 3px;
+}
+.product_hero_image img{
+    width: 100%;
+    background: rgb(155, 148, 148);
+    min-height: 450px;
+    object-fit: contain;
+    margin-top: 50px;
+    overflow: hidden;
+}
+.product_name{
+    font-size: 2rem;
+    /* margin-top: 60px; */
+    font-weight: 700;    
+}
+.product_disc{
+    /* white-space: nowrap; */
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    padding: 5px 0px 23px 0px;
+}
+.prduct-price{
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 15px;
+}
+.prduct-price s{
+    font-size: 17px;
+    margin-left: 20px;
+    color: rgb(82, 74, 74);
+}
+.prduct-price span{
+    font-size: 15px;
+    margin-left: 5px;
+    text-transform: uppercase;
+}
+.product_feture1{
+    transform: translateY(-16px);
+}
+.product_feture-box{
+    padding: 15px 0px 15px 0px;
+}
+.color{
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+.color_item{
+    border: 1px solid;
+    padding: 5px 20px;
+    border-radius: 7px;
+    margin-left: 0px;
+    margin-right: 7px;
+    
+}
+.quntity{
+    margin-left:0px;
+    margin-top: 10px;
+    margin-right: 20px;
+    border: 1px solid;
+    display: flex;
+    width: 120px;
+    height: 45px;
+    border-radius: 7px;
+}
+.que{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.mins{
+    padding-left: 15px;
+}
+.plas{
+    margin-top: 2px;
+   padding-right: 15px;
+}
+.num{
+    margin: auto;
+}
+.qnty{
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 0px !important;
+}
+.item_No_Outer{
+    height: 30px;
+    display: flex;
+    width: 100px;
+    border-radius: 7px;
+    border: 1px solid;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+.minus-btn,.plus-btn{
+    display: flex;
+    cursor: pointer;
+    background: rgb(223, 189, 189);
+    width: 20px;
+    height: 100%;
+    font-size: 17px !important;
+    justify-content: center;
+    align-items: center;
+}
+.cart_outer{
+    display: flex;
+}
+.addCart{
+    font-weight: 700;
+    height: 46px;
+    display: flex;
+    border-radius: 7px;
+    border: 1px solid;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    background-color: rgb(121, 120, 120);
+color: white;
+}
+.addCart:hover{
+    background-color: white;
+    color: rgb(71, 70, 70);
+    cursor: pointer;
+}
+
+.share{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+.shr{
+    margin-left: 10px !important;
+    height: 28px;
+    width: auto;
+}
+.shr img{
+    width: 27px !important;
+}
+.fav,.shr{
+    border: 2px solid;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    height: 45px;
+    margin-left: 20px;margin-top: 5px;
+
+}
+.fav img{
+    margin-top: 7px;
+    width: 27px;
+}
+.purchase{
+    margin-left: 0px;
+    border: 1px solid;
+    width: 455px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    
+}
+.a{
+    color: black;
+    text-decoration: none;
+}
+.a:hover{
+    color: black;
+    text-decoration: none;
+}
+.nav-edit{
+    display: flex;
+    margin-top: 50px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.nav-edit .nav-item a{
+    color: #998f8f !important;
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 18px;
+    padding-bottom: 10px;
+    cursor: pointer;
+  
+}
+hr{
+    margin-top: 0px !important;
+}
+.con-outer{
+    display: flex;
+}
+#con-left{
+    width: 200px;
+}
+.cust-rev{
+    text-align: center;
+}
+.reviw-form{
+    font-size: 18PX;
+    padding: 10px;
+    font-weight: 600;
+    width: 200PX;
+    border: 1px solid;
+    border-radius: 7px;
+    color: rgb(34, 33, 33);
+    margin: auto;
+    cursor: pointer;
+}
+.form-edit{
+    text-align: left !important;
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 30px;
+}
+.btn-primaryedt{
+    background-color: transparent;
+    color: black !important;
+    border: 1px solid black !important;
+}
+.view_{
+    justify-content: end;
+}
+.view_ img{
+    width: 20px;
+}

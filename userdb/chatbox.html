@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Box</title>
+    <link rel="stylesheet" href="">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.hidden {
+    display: none;
+}
+
+.chat-container {
+    display: flex;
+    width: 80%;
+    height: 80vh;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.sidebar {
+    width: 25%;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+.sidebar h2 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.chat-list {
+    overflow-y: auto;
+    height: calc(100% - 32px);
+}
+
+.chat-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.chat-item:hover {
+    background-color: #eee;
+}
+
+.main-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    background-color: #f1f1f1;
+    font-size: 18px;
+}
+
+.chat-content {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #fafafa;
+}
+
+.message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 70%;
+}
+
+.received {
+    background-color: #e1ffc7;
+    align-self: flex-start;
+}
+
+.sent {
+    background-color: #d1e7ff;
+    align-self: flex-end;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.chat-input button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+
+#startChatButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
+
+#startChatButton:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+    <div class="chat-container hidden" id="chatContainer">
+        <div class="sidebar">
+            <h2>Previous Chats</h2>
+            <div class="chat-list">
+                <!-- Previous chats will be listed here -->
+                <div class="chat-item">Chat with Alice</div>
+                <div class="chat-item">Chat with Bob</div>
+                <!-- Add more chat items as needed -->
+            </div>
+        </div>
+        <div class="main-chat">
+            <div class="chat-header">Chat with Alice</div>
+            <div class="chat-content">
+                <!-- Chat messages will be displayed here -->
+                <div class="message received">Hi there!</div>
+                <div class="message sent">Hello! How are you?</div>
+                <!-- Add more messages as needed -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type a message...">
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="startChatButton">Start Chat</button>
+
+    <script>
+        document.getElementById('startChatButton').addEventListener('click', function() {
+    document.getElementById('chatContainer').classList.remove('hidden');
+    document.getElementById('startChatButton').style.display = 'none';
+});
+
+document.getElementById('sendButton').addEventListener('click', function() {
+    const messageInput = document.getElementById('messageInput');
+    const messageText = messageInput.value;
+    if (messageText.trim() !== "") {
+        const chatContent = document.querySelector('.chat-content');
+        const newMessage = document.createElement('div');
+        newMessage.className = 'message sent';
+        newMessage.textContent = messageText;
+        chatContent.appendChild(newMessage);
+        messageInput.value = '';
+        chatContent.scrollTop = chatContent.scrollHeight; // Scroll to bottom
+    }
+});
+
+    </script>
+
+</body>
+</html>

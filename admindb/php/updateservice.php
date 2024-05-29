@@ -19,7 +19,10 @@ $detail = $_POST['detail'];
 $visibillity = $_POST['visibillity'];
 $tags = $_POST['tags'];
 
+if(empty($fileName)){
+    $update = mysqli_query($database, "UPDATE `service` SET `title`='$title', `category`='$category', `Visibillity`='$visibillity', `description`='$description', `detail`='$detail', `tags`='$tags' WHERE `id`='$serviceID'");
 
+}else{
 $update = mysqli_query($database, "UPDATE `service` SET `title`='$title', `category`='$category', `Visibillity`='$visibillity', `description`='$description', `detail`='$detail', `tags`='$tags', `image`='$newImgName' WHERE `id`='$serviceID'");
-
+}
 ?>

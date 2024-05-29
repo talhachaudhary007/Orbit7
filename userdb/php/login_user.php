@@ -16,20 +16,20 @@ if($user > 0){
 $sqli_password = $rec['password'];
 
         if($sqli_password == $login_password){
-                    $sql_email= $rec['email'];
+                    $userId= $rec['id'];
         
                  
                     // use session for user, but it expires autometically if browser close
                   
 
-                    $_SESSION['user_session'] = $sql_email; 
+                    $_SESSION['user_session'] = $userId; 
                     // echo $_SESSION['user_session'];
                     // echo '<script>location.href ="../service_add.php";</script>';
                     header("Location: ../single-product.php");
                     //   use cookies if user checks remember me 
                     if(isset($_POST['login_agree'])){
                         $cookie_name = "user";
-                        $cookie_value = $sql_email;
+                        $cookie_value = $userId;
                         setcookie($cookie_name, $cookie_value, time() + (86400 * 15), "/"); // 86400 = 1 day
                     }
         }else{

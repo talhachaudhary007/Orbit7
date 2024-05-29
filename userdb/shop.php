@@ -67,7 +67,7 @@ $select = mysqli_query($database,"SELECT * FROM `product`");
 											<span class="price"><?php echo $rec['NewPrice'];?></span>
 										</div>
 										<div class="product-post-content">
-											<a href='single-product.php?cpn=<?php echo $rec['Coupon'];?>'><?php echo $rec['Name'];?></a>
+											<a href='single-product.php?id=<?php echo $rec["Id"];?>'><?php echo $rec['Name'];?></a>
 											<ul class="product-list">
 												<li><a class="like" href="#"><i class="fa fa-heart"></i></a></li>
 												<li><a class="shop" href="#"><i class="fa fa-shopping-cart"></i></a></li>

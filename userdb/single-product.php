@@ -1,14 +1,15 @@
 <?php include 'header.php';
 include 'php/database.php';
-$CPN = $_GET['cpn'];
-$select = mysqli_query($database, "SELECT * FROM `product` WHERE `Coupon`='$CPN'");
+$productID = $_GET['id'];
+$select = mysqli_query($database, "SELECT * FROM `product` WHERE `id`='$productID'");
 $rec = mysqli_fetch_array($select);
 
-if(isset($_SESSION['user_session'])){
-echo $_SESSION['user_session'];
-}else{
-	echo "please login";
-}
+$selectImgs = mysqli_query($database, "SELECT * FROM `product_meta` WHERE `productID`='$productID'");
+
+
+
+// $showimgs
+
 ?>
 <style>
 	.purchase {
@@ -27,56 +28,46 @@ echo $_SESSION['user_session'];
 <div class="container">
 	<div class="row" style="margin-top:70px; margin-bottom:20px">
 
+	<!-- image gallery using php and jquery -->
+
 	<div class="col-md-7">
     <div class="border rounded-4">
         <a class="rounded-4" target="_blank" id="main-image-link">
-            <img style="width: 100%; height: 345px; margin: auto; object-fit: cover;" id="main-image" class="rounded-4 fit" src="" alt="Main Image"/>
+            <img style="width: 100%; height: 345px; margin: auto; object-fit: cover;" class="rounded-4 fit parent-img"
+                src="" alt="Main Image" id="main-image" />
         </a>
     </div>
     <div class="small-image-box">
-
         <?php
-            $db_imgs = $rec['Images'];
-            $db_imgs = rtrim($db_imgs, "~");
-            $allimages = explode("~", $db_imgs);
-            // Display the first image in the main image container by default
-            $firstImage = $allimages[0];
+        while($recImgs = mysqli_fetch_array($selectImgs)){
         ?>
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        <script>
-            $(document).ready(function() {
-                // Set the main image source to the first image on page load
-                var firstImageUrl = "../admindb/assets/images/product-img/<?php echo $firstImage ?>";
-                $('#main-image').attr('src', firstImageUrl);
-                $('#main-image-link').attr('href', firstImageUrl);
-
-                // Update the main image when a thumbnail is clicked
-                $('.small-image').on('click', function(e) {
-                    e.preventDefault();
-                    var largeImageUrl = $(this).data('full');
-                    $('#main-image').attr('src', largeImageUrl);
-                    $('#main-image-link').attr('href', largeImageUrl);
-                });
-            });
-        </script>
-
-        <?php
-            // Loop through each value and create a span element
-            foreach ($allimages as $show) {
-                $imagePath = "../admindb/assets/images/product-img/$show";
+        <a class="border mx-1 rounded-2 small-image">
+            <img width="60" height="60" class="rounded-2 child-img"
+                src="<?php echo '../admindb/assets/images/product-img/'.$recImgs['Image'] ?>"
+                alt="Thumbnail 1" />
+        </a>
+        <?php	
+        }
         ?>
-            <a class="border mx-1 rounded-2 small-image" data-full="<?php echo $imagePath; ?>">
-                <img width="60" height="60" style="object-fit: cover; border: 1px solid #524e4e5c" class="rounded-2 child-imgs" src="<?php echo $imagePath; ?>" alt="Thumbnail"/>
-            </a>
-        <?php
-            }
-        ?>
-
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // Set the first child image as the main image on page load
+        var firstChildImgSrc = $('.child-img').first().attr('src');
+        $('#main-image').attr('src', firstChildImgSrc);
+        $('#main-image-link').attr('href', firstChildImgSrc);
+
+        // Update the main image when a specific child image is clicked
+        $('.child-img').on('click', function() {
+            var childImgSrc = $(this).attr('src');
+            $('#main-image').attr('src', childImgSrc);
+            $('#main-image-link').attr('href', childImgSrc);
+        });
+    });
+</script>
 
 		<!-- ================================= -->
 		<div class="col-md-5">

@@ -27,7 +27,7 @@
                             <!-- Menu: Sub menu ul -->
                             <ul class="sub-menu collapse" id="menu-product">
                                 <li><a class="ms-link" href="product-grid.html">Product Grid</a></li>
-                                <li><a class="ms-link" href="product-list.html">Product List</a></li>
+                                <li><a class="ms-link" href="product_list.php">Product List</a></li>
                                 <li><a class="ms-link active" href="product_edit.php">Product Edit</a></li>
                                 <li><a class="ms-link" href="product-detail.html">Product Details</a></li>
                                 <li><a class="ms-link" href="product_add.php">Product Add</a></li>

@@ -86,10 +86,22 @@
 							
 							<li><a href="contact.php">Contact Us</a></li>
 							
-												<!-- <li><a class="like" href="#" style='font-size: 24px;'><i class="fa fa-heart"></i></a></li>
-												<li><a class="shop" href="shoping-cart.php" style='font-size: 24px;'><i class="fa fa-shopping-cart"></i></a></li> -->
-												<li><a href="login.php" class="btn btn-primary" style="color:white;">Login</a></a></li>
-												<li><a href="register.php" class="btn btn-primary" style="color:white;">Register</a></a></li>
+							<?php
+								
+								if(isset($_SESSION['user_session'])){
+									$user_session = $_SESSION['user_session'];
+									?>
+									<li><a class="like" href="#" style='font-size: 24px;'><i class="fa fa-heart"></i></a></li>
+									<li><a class="shop" href="shoping-cart.php" style='font-size: 24px;'><i class="fa fa-shopping-cart"></i></a></li>
+									<li><a href="/" class="btn btn-primary" style="color:white;">arslan</a></li>
+									<li><a href="php/logout.php?<?php $user_session ?>" class="btn btn-primary" style="color:white;">Log Out</a></li>
+									<?php }else{?>
+										<li><a href="login.php" class="btn btn-primary" style="color:white;">Login</a></li>
+										<li><a href="login.php" class="btn btn-primary" style="color:white;">Register</a></li>
+									<?php
+									}
+								
+															?>
 												
 						</ul>
 						

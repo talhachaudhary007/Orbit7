@@ -18,6 +18,10 @@
 .small-image-box a{
     margin-left: 3px;
 }
+.small-image img{
+    object-fit: cover;
+    border: 1px solid #47444463;
+}
 .product_hero_image img{
     width: 100%;
     background: rgb(155, 148, 148);

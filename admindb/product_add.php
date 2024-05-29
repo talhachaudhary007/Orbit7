@@ -35,33 +35,58 @@ include "navbar.php";
                         <div class="card-body pb-4">
                             <input type="file" id="file-input" class="form-control" name="upload_mfiles[]" multiple>
                             <div id="preview-container"></div>
+                            <input type="hidden" id="primary-image" name="primaryImage" value="">
                         </div>
                     </div>
-
 
                     <!-- script to view multiple files -->
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                     <script>
-                        $(document).ready(function () {
-                            $("#file-input").on("change", function () {
-                                var files = $(this)[0].files;
-                                $("#preview-container").empty();
-                                if (files.length > 0) {
-                                    for (var i = 0; i < files.length; i++) {
-                                        var reader = new FileReader();
-                                        reader.onload = function (e) {
-                                            $("<div class='preview-box'> <div class='preview'><img src='" + e.target.result + "'><button class='delete gallery-button' >Delete</button></div> </div>").appendTo("#preview-container");
-                                        };
-                                        reader.readAsDataURL(files[i]);
-                                    }
-                                }
-                            });
-                            $("#preview-container").on("click", ".delete", function () {
-                                $(this).parent(".preview").remove();
-                                $("#file-input").val(""); // Clear input value if needed
-                            });
-                        });
-                    </script>
+        $(document).ready(function () {
+            $("#file-input").on("change", function () {
+                var files = $(this)[0].files;
+                $("#preview-container").empty();
+                if (files.length > 0) {
+                    for (var i = 0; i < files.length; i++) {
+                        var reader = new FileReader();
+                        reader.onload = (function (file, index) {
+                            return function (e) {
+                                var uniqueId = "radio-" + index;
+                                $("<div class='preview-box'>\
+                                    <div class='preview'>\
+                                        <img src='" + e.target.result + "' alt='Preview Image'>\
+                                        <input type='radio' id='" + uniqueId + "' name='primaryImageSelect' value='" + file.name + "'>\
+                                        <label for='" + uniqueId + "'>Primary Image</label>\
+                                        <button class='delete gallery-button' type='button'>Delete</button>\
+                                    </div>\
+                                </div>").appendTo("#preview-container");
+                            };
+                        })(files[i], i);
+                        reader.readAsDataURL(files[i]);
+                    }
+                }
+            });
+
+            $("#preview-container").on("click", ".delete", function () {
+                $(this).closest(".preview-box").remove();
+                // Optionally, you can clear the file input if needed
+                // $("#file-input").val("");
+            });
+
+            $("#preview-container").on("change", "input[name='primaryImageSelect']", function () {
+                var primaryImage = $(this).val();
+                $("#primary-image").val(primaryImage);
+            });
+
+            $("#image-upload-form").on("submit", function (e) {
+                if (!$("input[name='primaryImageSelect']:checked").val()) {
+                    alert("Please select a primary image.");
+                    return false; // Prevent form submission
+                }
+            });
+        });
+    </script>
+
                     <!-- script ends -->
 
                     <!-- basic card information starts -->

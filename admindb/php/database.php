@@ -12,5 +12,6 @@ if($database){
 } else{
     echo"something went wrong";
 }
-
+//$path = 'assets/images/google - Copy.svg';
+//unlink($path);
 ?>

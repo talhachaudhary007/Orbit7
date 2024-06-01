@@ -3,31 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantity Input</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Star Rating</title>
+    <style>
+        .star-container {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .star-radio {
+            display: none;
+        }
+
+        .star-label {
+            font-size: 2em;
+            color: #ccc;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        .star-label:hover,
+        .star-label:hover ~ .star-label,
+        .star-radio:checked ~ .star-label {
+            color: #ffcc00;
+        }
+    </style>
 </head>
 <body>
-    
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<div class="container mt-5">
-    <div class="d-flex justify-content-center">
-        <div class="input-group" style="width: 150px;">
-            <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('quantity').stepDown()">-</button>
-            </div>
-            <input type="number" id="quantity" class="form-control text-center" value="0" min="0" readonly>
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('quantity').stepUp()">+</button>
+    <form method='post' action='php/review.php'>
+        <div class="form-group">
+            <label for="reviewStars">Rating:</label>
+            <div class="star-container">
+                <input type="radio" class="star-radio" id="star5" name="rating" value="5">
+                <label for="star5" class="star-label" data-value="5">&#9733;</label>
+                
+                <input type="radio" class="star-radio" id="star4" name="rating" value="4">
+                <label for="star4" class="star-label" data-value="4">&#9733;</label>
+                
+                <input type="radio" class="star-radio" id="star3" name="rating" value="3">
+                <label for="star3" class="star-label" data-value="3">&#9733;</label>
+                
+                <input type="radio" class="star-radio" id="star2" name="rating" value="2">
+                <label for="star2" class="star-label" data-value="2">&#9733;</label>
+                
+                <input type="radio" class="star-radio" id="star1" name="rating" value="1">
+                <label for="star1" class="star-label" data-value="1">&#9733;</label>
             </div>
         </div>
-    </div>
-</div>
+        <div class="form-group">
+            <label for="reviewText">Your Review:</label>
+            <textarea class="form-control" name='desc' id="reviewText" rows="4" placeholder="Write your review here..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
 
-<!-- Bootstrap JS and dependencies -->
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star-label');
 
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-value');
+                    stars.forEach(star => {
+                        if (star.getAttribute('data-value') <= rating) {
+                            star.style.color = '#ffcc00';
+                        } else {
+                            star.style.color = '#ccc';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

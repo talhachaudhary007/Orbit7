@@ -66,7 +66,7 @@ if(isset($_GET['id'])){
                     <?php echo $rec['Description']; ?>
                 </p>
                 <div>
-                    <a href="service_edit.php?id=<?php echo $rec['Id'] ?>" class="btn btn-primary">Edit</a>
+                    <a href="product_edit.php?id=<?php echo $rec['Id'] ?>" class="btn btn-primary">Edit</a>
                     <a href="service_detail.php?id=<?php echo $rec['Id'] ?>" class="btn btn-primary">View</a>
                     <a href="#exampleModal2<?php echo $rec['Id'] ?>" data-bs-toggle="modal" class="btn btn-primary">Delete</a>
                 </div>

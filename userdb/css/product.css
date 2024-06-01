@@ -1,3 +1,29 @@
+
+
+
+.star-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.star-radio {
+    display: none;
+}
+
+.star-label {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.star-label:hover,
+.star-label:hover ~ .star-label,
+.star-radio:checked ~ .star-label {
+    color: #ffcc00;
+}
+
 /*-------------------------------------------------------*/
 .btn-primary{
     background-color: #0076f9;

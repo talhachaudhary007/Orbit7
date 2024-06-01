@@ -63,7 +63,15 @@ $select = mysqli_query($database,"SELECT * FROM `product`");
 								<div class="col-md-4">
 									<div class="product-post">
 										<div class="product-post-gal">
-											<img alt="" src="upload/image7.jpg">
+
+										<?php
+										$productID = $rec['Id'];
+										$primaryImage = mysqli_query($database,"SELECT * FROM `product_meta` Where `productID`='$productID' AND `primaryImage`='1'");
+										$showImg = mysqli_fetch_array($primaryImage);
+
+										?>
+
+											<img alt="" src="<?php echo '../admindb/assets/images/product-img/'.$showImg['Image'] ?>">
 											<span class="price"><?php echo $rec['NewPrice'];?></span>
 										</div>
 										<div class="product-post-content">
@@ -78,6 +86,7 @@ $select = mysqli_query($database,"SELECT * FROM `product`");
 								</div>
 								<?php }?>
 							</div>
+
 							<div class="col-md-12">
 							<ul class="pagination-list " style="text-align: center;">
 								<li><a class="active" href="#">1</a></li>
@@ -89,76 +98,44 @@ $select = mysqli_query($database,"SELECT * FROM `product`");
 							</div>
 						</div>
 
-
 						<div class="col-md-3 shop-sidebar">
 							<div class="sidebar-widgets">
 								<div class="shop-widget">
 									<h4>Categories</h4>
+
+
 									<ul class="category-shop-list">
-										<li>
-											<a class="accordion-link" href="#">Watches <span>(4)</span></a>
-											<ul class="accordion-list-content">
-												<li><a href="#">Jackets <span>(7)</span></a></li>
-												<li><a href="#">Electronics <span>(10)</span></a></li>
-												<li><a href="#">Sports <span>(12)</span></a></li>
-												<li><a href="#">Garden <span>(2)</span></a></li>
-											</ul>
-										</li>
-										<li>
-											<a class="accordion-link" href="#">Jewellery <span>(8)</span></a>
-											<ul class="accordion-list-content">
-												<li><a href="#">Jackets <span>(7)</span></a></li>
-												<li><a href="#">Electronics <span>(10)</span></a></li>
-												<li><a href="#">Sports <span>(12)</span></a></li>
-												<li><a href="#">Garden <span>(2)</span></a></li>
-											</ul>
-										</li>
-										<li>
-											<a class="accordion-link" href="#">Technology <span>(6)</span></a>
-											<ul class="accordion-list-content">
-												<li><a href="#">Jackets <span>(7)</span></a></li>
-												<li><a href="#">Electronics <span>(10)</span></a></li>
-												<li><a href="#">Sports <span>(12)</span></a></li>
-												<li><a href="#">Garden <span>(2)</span></a></li>
-											</ul>
-										</li>
-										<li>
-											<a class="accordion-link" href="#">Kids <span>(5)</span></a>
-											<ul class="accordion-list-content">
-												<li><a href="#">Jackets <span>(7)</span></a></li>
-												<li><a href="#">Electronics <span>(10)</span></a></li>
-												<li><a href="#">Sports <span>(12)</span></a></li>
-												<li><a href="#">Garden <span>(2)</span></a></li>
-											</ul>
-										</li>
-										<li>
-											<a class="accordion-link" href="#">Electronics <span>(4)</span></a>
-											<ul class="accordion-list-content">
-												<li><a href="#">Jackets <span>(7)</span></a></li>
-												<li><a href="#">Electronics <span>(10)</span></a></li>
-												<li><a href="#">Sports <span>(12)</span></a></li>
-												<li><a href="#">Garden <span>(2)</span></a></li>
-											</ul>
-										</li>
-										<li>
-											<a class="accordion-link" href="#">Sports <span>(5)</span></a>
-											<ul class="accordion-list-content">
-												<li><a href="#">Jackets <span>(7)</span></a></li>
-												<li><a href="#">Electronics <span>(10)</span></a></li>
-												<li><a href="#">Sports <span>(12)</span></a></li>
-												<li><a href="#">Garden <span>(2)</span></a></li>
-											</ul>
-										</li>
-										<li>
-											<a class="accordion-link" href="#">Bicycles <span>(7)</span></a>
-											<ul class="accordion-list-content">
-												<li><a href="#">Jackets <span>(7)</span></a></li>
-												<li><a href="#">Electronics <span>(10)</span></a></li>
-												<li><a href="#">Sports <span>(12)</span></a></li>
-												<li><a href="#">Garden <span>(2)</span></a></li>
-											</ul>
-										</li>
+
+											<?php
+											$selectCategories = mysqli_query($database,"SELECT * FROM `category`");
+											while($Ctg = mysqli_fetch_array($selectCategories)){
+											?>											
+											<li>
+											<a class="accordion-link" href="#"><?php echo $Ctg['category'] ?><span>(4)</span></a>
+												<ul class="accordion-list-content">
+
+												<?php
+												$subCtg = $Ctg['subcategories'];
+												
+												$subCategories = explode(",", $subCtg);
+												
+												// Loop through each value and create a span element
+												foreach ($subCategories as $showSubCtg) { 
+													?>
+												<li><a href="#"><?php echo $showSubCtg;?> <span>(2)</span></a></li>
+
+												<?php
+}
+?>
+
+												</ul>
+											</li>
+											<?php
+											}
+											?>
 									</ul>
+
+	
 								</div>
 
 								<div class="shop-widget">

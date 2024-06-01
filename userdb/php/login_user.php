@@ -25,7 +25,7 @@ $sqli_password = $rec['password'];
                     $_SESSION['user_session'] = $userId; 
                     // echo $_SESSION['user_session'];
                     // echo '<script>location.href ="../service_add.php";</script>';
-                    header("Location: ../single-product.php");
+                    header("Location: ../shop.php");
                     //   use cookies if user checks remember me 
                     if(isset($_POST['login_agree'])){
                         $cookie_name = "user";

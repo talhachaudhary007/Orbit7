@@ -3,9 +3,13 @@ include 'php/database.php';
 $productID = $_GET['id'];
 $select = mysqli_query($database, "SELECT * FROM `product` WHERE `id`='$productID'");
 $rec = mysqli_fetch_array($select);
+$session_user = $_SESSION['user_session'];
 
 $selectImgs = mysqli_query($database, "SELECT * FROM `product_meta` WHERE `productID`='$productID'");
 
+// user select for review name of user
+$select_user = mysqli_query($database, "SELECT * FROM `orbitusers` WHERE `id` = '$session_user'");
+$rec_user = mysqli_fetch_array($select_user);
 
 
 // $showimgs
@@ -145,7 +149,7 @@ $selectImgs = mysqli_query($database, "SELECT * FROM `product_meta` WHERE `produ
 						</div>
 
 						<a href="cart.php"> <button class="btn btn-primary btn-purchase" style="width: 400px;"
-								onclick="addToCart()">Add To Cart</button></a>
+								onclick="addToCart()">Add To Cart </button></a>
 						<button class="btn btn-success btn-purchase" style="width: 400px;" onclick="buyNow()">Buy
 							Now</button>
 					</div>
@@ -227,32 +231,151 @@ $selectImgs = mysqli_query($database, "SELECT * FROM `product_meta` WHERE `produ
 			<div class="cust-rev mt-3">
 
 				<div class="row">
-					<div class="col-md-6">
+				<div class="col-md-8" style="text-align:left !important;">
+          <?php
+		  $select_rev = mysqli_query($database, "SELECT * FROM `reviews` WHERE `productId`='$productID'");
+          while($rec_rev = mysqli_fetch_array($select_rev)){
+			$UserID = $rec_rev['userId'];
+			$RevStars = $rec_rev['stars'];
+			$GetUserName = mysqli_query($database, "SELECT * FROM `orbitusers` WHERE `id`='$UserID'");
+			$ud = mysqli_fetch_array($GetUserName);
+			?>
+            <div class="review-card">
+                <div class="review-title">
+                    <img src="https://via.placeholder.com/50" alt="Profile Icon" class="profile-icon">
+                    <!-- <div> -->
+                        <h4 class=""><?php echo $ud['name']; ?></h4>
+						<div class="star-rating">
+						<?php 
+							for($i = 1; $i <=5; $i++){
+						?>
+                            <label for="star1-john" <?php if($i <= $RevStars){echo 'style="color:gold;"';} ?>>&#9733;</label>
+						<?php } ?>
+                        </div>
+                    <!-- </div> -->
+				</div>
+				<p class="review-time">Posted on <?php  echo date('l-F-Y' , strtotime($rec_rev['dateTime']));?></p>
+                <div class="review-comment">
+                    <span><?php echo $rec_rev['comment'];?></span>
+                </div>
+            </div>
+			<?php } ?>
+        </div>
 
-						<form class="form-edit">
-							<div class="mb-3">
-								<label for="" class="form-label">Name</label>
-								<input type="text" class="form-control" id="" placeholder="Enter Your Name">
-							</div>
-							<div class="mb-3">
-								<label for="" class="form-label">Email</label>
-								<input type="email" class="form-control" id="" placeholder="Enter Your Email">
-							</div>
-							<div class="over_view view_ d-flex" style="margin-bottom: 10px;">
+		<style>
+.review-title{
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+}	
+.review-title h4{
+	font-weight: 600;
+	margin-left: 15px;
+}
+.review-comment{
+	margin-top: 10px;
+}		
+.review-comment span{
+	font-size: 15px;
 
+}
+.star-rating {
+	margin-left: auto; /* Pushes the last div to the far end */
+}
+.star-rating input {
+    display: none;
+}
+.star-rating label {
+    font-size: 2em;
+    color: lightgray;
+    cursor: pointer;
+}
+.star-rating input:checked ~ label {
+    color: gold;
+}
+.review-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    /* margin-bottom: 20px; */
+}
+.profile-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.review-time {
+    color: #888;
+    font-size: 12px;
+    margin-left: 66px;
+    margin-top: -18px;
+}
+		</style>
+			
+		<div class="col-md-4" style="text-align: left !important;">
+		<?php
+	$Check_review = mysqli_query($database, "SELECT * FROM `reviews` WHERE `productId`='$productID' AND `userId`='$session_user'");
+	$num_rewa = mysqli_num_rows($Check_review);
+	
+	if ($num_rewa > 0) {
+		
+			echo "Feedback already given";
+		} else {
+		?>  
+		<form method='post' action='php/review.php'>
+			<div class="form-group">
+				<label for="reviewStars">Rating:</label>
+				<div class="star-container">
+					<input type="radio" class="star-radio" id="star5" name="rating" value="5">
+					<label for="star5" class="star-label" data-value="5">&#9733;</label>
+					
+					<input type="radio" class="star-radio" id="star4" name="rating" value="4">
+					<label for="star4" class="star-label" data-value="4">&#9733;</label>
+					
+					<input type="radio" class="star-radio" id="star3" name="rating" value="3">
+					<label for="star3" class="star-label" data-value="3">&#9733;</label>
+					
+					<input type="radio" class="star-radio" id="star2" name="rating" value="2">
+					<label for="star2" class="star-label" data-value="2">&#9733;</label>
+					
+					<input type="radio" class="star-radio" id="star1" name="rating" value="1">
+					<label for="star1" class="star-label" data-value="1">&#9733;</label>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<input type="text" value="<?php echo $productID;?>" hidden name="prod_id">
+				<input type="text" value="<?php echo $session_user;?>" hidden name="userId">
+				<label for="reviewText">Your Review:</label>
+				<textarea class="form-control" name='comment' id="reviewText" rows="4" placeholder="Write your review here..."></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit Review</button>
+		</form>
+	<?php
+	}
+	?>
+	
+			<!-- review jquery -->
+			<script>
+     document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star-label');
 
-							</div>
-							<div class="mb-3">
-								<label for="" class="form-label">Review Title</label>
-								<input type="text" class="form-control" id="" placeholder="Enter Review Title">
-							</div>
-							<div class="form-group">
-								<label for="comment">Body Of Review (1500)</label>
-								<textarea class="form-control" rows="5" id="comment"></textarea>
-							</div>
-							<button type="submit" class="btn btn-primary btn-primaryedt">Submit Review</button>
-						</form>
-
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-value');
+                    stars.forEach(star => {
+                        if (star.getAttribute('data-value') <= rating) {
+                            star.style.color = '#ffcc00';
+                        } else {
+                            star.style.color = '#ccc';
+                        }
+                    });
+                });
+            });
+        });
+</script>
+			<!--  -->
 					</div>
 				</div>
 			</div>

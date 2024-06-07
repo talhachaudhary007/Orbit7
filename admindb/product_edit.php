@@ -9,13 +9,16 @@ $productID = $_GET['id'];
 $select = mysqli_query($database, "SELECT * FROM `product` Where `Id` = '$productID'");
 $rec= mysqli_fetch_array($select);
 
+
 ?>
-<?php echo $rec['Description'] ?>
+
 
 <!-- Body: Body -->
 <div class="body d-flex py-3">
     <div class="container-xxl">
-        <form method="post" action="php/updateProduct.php" enctype="multipart/form-data">
+    <!-- php/updateProduct.php -->
+        <form method="post" action="updateProduct.php" enctype="multipart/form-data">
+            <input type="hidden" value="<?php echo $productID; ?>" name="product_id" />
             <div class="row align-items-center">
                 <div class="border-0 mb-4">
                     <div
@@ -26,7 +29,7 @@ $rec= mysqli_fetch_array($select);
                     </div>
                 </div>
             </div> <!-- Row end  -->
-
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             <div class="row g-3 mb-3">
                 <div class="col-xl-8 col-lg-8">
 
@@ -36,61 +39,24 @@ $rec= mysqli_fetch_array($select);
                         <div
                             class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
                             <h6 class="mb-0 fw-bold ">Choose Pictures</h6>
+                            <div id="ProdImages"></div>
+                        </div>
+                       <script>
+                        $("#ProdImages").load('php/updateProduct.php?productId=<?php echo $productID; ?>');
+                       </script>
+                       <!--  -->
+                       
+
+                                            <!--  -->
                         </div>
                         <div class="card-body pb-4">
                             <input type="file" id="file-input" class="form-control" name="upload_mfiles[]" multiple>
                             <div id="preview-container"></div>
-                            <input type="hidden" id="primary-image" name="primaryImage" value="<?php echo $rec['images'] ?>">
                         </div>
                     </div>
 
-                    <!-- script to view multiple files -->
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                    <script>
-        $(document).ready(function () {
-            $("#file-input").on("change", function () {
-                var files = $(this)[0].files;
-                $("#preview-container").empty();
-                if (files.length > 0) {
-                    for (var i = 0; i < files.length; i++) {
-                        var reader = new FileReader();
-                        reader.onload = (function (file, index) {
-                            return function (e) {
-                                var uniqueId = "radio-" + index;
-                                $("<div class='preview-box'>\
-                                    <div class='preview'>\
-                                        <img src='" + e.target.result + "' alt='Preview Image'>\
-                                        <input type='radio' id='" + uniqueId + "' name='primaryImageSelect' value='" + file.name + "'>\
-                                        <label for='" + uniqueId + "'>Primary Image</label>\
-                                        <button class='delete gallery-button' type='button'>Delete</button>\
-                                    </div>\
-                                </div>").appendTo("#preview-container");
-                            };
-                        })(files[i], i);
-                        reader.readAsDataURL(files[i]);
-                    }
-                }
-            });
-
-            $("#preview-container").on("click", ".delete", function () {
-                $(this).closest(".preview-box").remove();
-                // Optionally, you can clear the file input if needed
-                // $("#file-input").val("");
-            });
-
-            $("#preview-container").on("change", "input[name='primaryImageSelect']", function () {
-                var primaryImage = $(this).val();
-                $("#primary-image").val(primaryImage);
-            });
-
-            $("#image-upload-form").on("submit", function (e) {
-                if (!$("input[name='primaryImageSelect']:checked").val()) {
-                    alert("Please select a primary image.");
-                    return false; // Prevent form submission
-                }
-            });
-        });
-    </script>
+                   <!-- ajax for delete -->
+                  
 
                     <!-- script ends -->
 
@@ -117,13 +83,11 @@ $rec= mysqli_fetch_array($select);
                                         <option id='' value="<?php echo $rec['Category'] ?>">Select Catecogry</option>
                                         <!-- fetch all the added categories form category table  -->
                                         <?php
-                                                $select = mysqli_query($database, "SELECT * FROM `category` WHERE `categoryType` = 'product'");
-                                                while($rec = mysqli_fetch_array($select)){
+                                                $category = mysqli_query($database, "SELECT * FROM `category` WHERE `categoryType` = 'product'");
+                                                while($show = mysqli_fetch_array($category)){
                                                 ?>
 
-                                        <option value="<?php echo $rec['id']; ?>">
-                                            <?php echo $rec['category'] ?>
-                                        </option>
+                                        <option value="<?php echo $show['id']; ?>"> <?php echo $show['category'] ?> </option>
 
                                         <?php
                                                 }
@@ -176,20 +140,23 @@ $rec= mysqli_fetch_array($select);
                             <h6 class="m-0 fw-bold">Additional Information</h6>
                         </div>
                         <div class="card-body">
-                            <div class="row g-3 align-items-center">
+                            <div class="row g-3">
                                 <div class="col-md-12">
                                     <label class="form-label">Product Description</label>
-                                    <textarea class="form-control" name="pDesc" id="" rows="4"><?php echo $rec['Description'] ?></textarea>
+                                    <textarea class="form-control" name="pDesc" id="" rows="1" style="text-indent: -21%;">
+                                    <?php echo $rec['Description'];?>
+                                    </textarea>
                                 </div>
                                 <div class="col-md-12">
+
                                     <label class="form-label">Additional Information</label>
                                     <textarea class="form-control" name="pAddInfo"
-                                        placeholder="Enter additional information..." id="" rows="1"></textarea>
+                                        placeholder="Enter additional information..." id="" rows="1"> <?php echo $rec['Information'];?></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label">Shipping & Return Policy</label>
                                     <textarea class="form-control" name="pPolicy"
-                                        placeholder="Enter product return policy..." id="" rows="1"></textarea>
+                                        placeholder="Enter product return policy..." id="" rows="1"><?php echo $rec['Policy'];?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -206,12 +173,12 @@ $rec= mysqli_fetch_array($select);
                                 <div class="col-6">
                                     <div class="col-md-12">
                                         <label class="form-label">Variant 1</label>
-                                        <input type="text" class="form-control" name="pColor" placeholder="Color">
+                                        <input type="text" class="form-control" value="<?php echo $rec['Variant1'];?>" name="pColor" placeholder="Color">
                                     </div>
 
                                     <div class="form-group demo-tagsinput-area">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="pColorV" data-role="tagsinput"
+                                            <input type="text" class="form-control" value="<?php echo $rec['VariantValue1'];?>" name="pColorV" data-role="tagsinput"
                                                 placeholder="red, black, yellow">
                                         </div>
                                     </div>
@@ -219,12 +186,12 @@ $rec= mysqli_fetch_array($select);
                                 <div class="col-6">
                                     <div class="col-md-12">
                                         <label class="form-label">Variant 2</label>
-                                        <input type="text" class="form-control" name="pSize" placeholder="Size">
+                                        <input type="text" class="form-control" value="<?php echo $rec['Variant2'];?>" name="pSize" placeholder="Size">
                                     </div>
 
                                     <div class="form-group demo-tagsinput-area">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" name="pSizeV" data-role="tagsinput"
+                                            <input type="text" class="form-control" value="<?php echo $rec['VariantValue2'];?>" name="pSizeV" data-role="tagsinput"
                                                 placeholder="small, medium, large">
                                         </div>
                                     </div>
@@ -247,12 +214,12 @@ $rec= mysqli_fetch_array($select);
                             </div>
                             <div class="card-body">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" value="Published" name="vStatus"
+                                    <input class="form-check-input" type="radio" value="Published" <?php if($rec['Visibillity'] == 'Published'){echo 'checked';} ?> name="vStatus"
                                         checked>
                                     <label class="form-label">Published</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" value="Hidden" type="radio" name="vStatus">
+                                    <input class="form-check-input" value="Hidden" <?php if($rec['Visibillity'] == 'Hidden'){echo 'checked';} ?> type="radio" name="vStatus">
                                     <label class="form-label">Hidden</label>
                                 </div>
                                 <div class="form-check py-1">
@@ -292,15 +259,15 @@ $rec= mysqli_fetch_array($select);
                                 <div class="row g-3 align-items-center">
                                     <div class="col-md-12">
                                         <label class="form-label">Product Price Old</label>
-                                        <input type="text" class="form-control" name="pOldPrice" placeholder="$350">
+                                        <input type="text" class="form-control" value="<?php echo $rec['OldPrice'];?>" name="pOldPrice" placeholder="$350">
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label">Product Price New</label>
-                                        <input type="text" class="form-control" name="pNewPrice" placeholder="$355">
+                                        <input type="text" class="form-control" value="<?php echo $rec['NewPrice'];?>" name="pNewPrice" placeholder="$355">
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label">Stock Quantity</label>
-                                        <input type="text" class="form-control" placeholder="Total Stock Quantity"
+                                        <input type="text" class="form-control" value="<?php echo $rec['Quantity'];?>" placeholder="Total Stock Quantity"
                                             name="pQuantity">
                                     </div>
                                 </div>
@@ -315,9 +282,7 @@ $rec= mysqli_fetch_array($select);
                                 <div class="row g-3 align-items-center">
                                     <div class="col-md-12">
                                         <!-- <label class="form-label">Product Coupon</label> -->
-                                        <?php $coupon = rand(00000000 , 44444444); ?>
-                                        <input type="text" readonly name="coupon" class="form-control"
-                                            value="<?php echo $coupon?>">
+                                        <input type="text" readonly name="coupon" value="<?php echo $rec['Coupon'];?>" class="form-control" >
 
                                     </div>
                                 </div>

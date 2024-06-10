@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2024 at 11:21 PM
+-- Generation Time: Jun 07, 2024 at 12:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -67,7 +67,9 @@ CREATE TABLE `orbitusers` (
 --
 
 INSERT INTO `orbitusers` (`id`, `name`, `email`, `password`, `otp`) VALUES
-(0, 'arslan', 'arslan.farid79@gmail.com', '1122', 0);
+(1, 'arslan', 'arslan.farid79@gmail.com', '1122', 0),
+(2, 'Talha', 'aljanatmart@gmail.com', '1122', 0),
+(13, 'MBZ', 'aljanatt@gmail.com', '1122', 0);
 
 -- --------------------------------------------------------
 
@@ -92,17 +94,62 @@ CREATE TABLE `product` (
   `NewPrice` int(11) NOT NULL,
   `Coupon` varchar(255) NOT NULL,
   `Visibillity` varchar(55) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `Images` varchar(255) NOT NULL
+  `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`Id`, `Name`, `Quantity`, `Description`, `Information`, `Policy`, `Variant1`, `VariantValue1`, `Variant2`, `VariantValue2`, `Category`, `Subcategory`, `OldPrice`, `NewPrice`, `Coupon`, `Visibillity`, `userId`, `Images`) VALUES
-(4, 'Iphone 11 Pro Max', 20, 'Apple iPhone 11 smartphone. Announced Sep 2019. Features 6.1″ display, Apple A13 Bionic chipset, 3110 mAh battery, 256 GB storage, 4 GB RAM.', 'iPhone 11 is the next generation of iPhone, packed with great new capabilities in an incredible design, including new Ultra Wide and Wide cameras for gorgeous ', 'Apple iPhone 11 price in Pakistan, daily updated phones including specs & information : WhatMobile.com.pk : Apple iPhone 11 price Pakistan', 'Variants', 'Iphone11,Iphone 11 pro,Iphone 11 pro max', 'Color', 'blue,green,white,black,purple', '60', 'Iphone11', 750, 600, 'CPN-416883', 'Published', 0, ''),
-(24, 'Iphone 12 Pro Max', 35, 'Apple iPhone 12 smartphone. Announced Oct 2020. Features 6.1″ display, Apple A14 Bionic chipset, 2815 mAh battery, 256 GB storage, 4 GB RAM, Ceramic Shield ', 'iPhone 12 was launched on October 23rd, 2020 with five different variants. The list of iPhone 12 models is: the basic model is iPhone 12, the second variant is', 'Find the best Iphone 12 in Pakistan. OLX Pakistan offers online local classified ads for Iphone 12. Post your classified ad for free in various categories', 'Variants', 'Iphone 12,Iphone 12 pro,Iphone 12 pro max', 'Color', 'red,black,purple,white,green', '60', 'Iphone12', 1200, 1150, '20300615', '2024-05-14', 0, '64405.webp~92384.jpg~71259.jpg~1751.jpg~67750.jpg~');
+INSERT INTO `product` (`Id`, `Name`, `Quantity`, `Description`, `Information`, `Policy`, `Variant1`, `VariantValue1`, `Variant2`, `VariantValue2`, `Category`, `Subcategory`, `OldPrice`, `NewPrice`, `Coupon`, `Visibillity`, `userId`) VALUES
+(1, 'Prodcut 1', 12, 'Product DescriptionProduct Description', 'Product DescriptionProduct Description', 'Product DescriptionProduct Description', 'Size', 'small,medium,large', 'Color', 'red,black,yellow', '58', 'Men', 350, 230, '28567840', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_meta`
+--
+
+CREATE TABLE `product_meta` (
+  `id` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
+  `Image` varchar(256) NOT NULL,
+  `primaryImage` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_meta`
+--
+
+INSERT INTO `product_meta` (`id`, `productID`, `Image`, `primaryImage`) VALUES
+(1, 1, '52767.jpg', ''),
+(2, 1, '60612.jpg', ''),
+(3, 1, '84906.jpg', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `stars` int(11) NOT NULL,
+  `comment` longtext NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `dateTime` datetime(6) NOT NULL,
+  `productId` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `userId`, `stars`, `comment`, `status`, `dateTime`, `productId`) VALUES
+(1, 1, 4, 'This Stainless Steel Water Bottle has been a game changer for my daily hydration routine. It\'s incredibly sturdy and has survived multiple drops without a dent. The insulation is fantastic, keeping my water cold for up to 24 hours and hot beverages warm for about 12 hours.', '0', '2024-05-29 20:51:35.000000', '1'),
+(2, 13, 5, 'Adding this Memory Foam Mattress Topper to my bed has significantly improved my sleep quality. The memory foam conforms perfectly to my body, providing excellent support and alleviating pressure points, especially around my hips and shoulders.', '0', '2024-05-29 20:59:20.000000', '1'),
+(3, 2, 3, 'The insulation is fantastic, keeping my water cold for up to 24 hours and hot beverages warm for about 12 hours. I love the sleek design and the fact that it fits perfectly in my car\'s cup holder. The wide mouth makes it easy to clean and add ice cubes. If you\'re looking for a durable and stylish water bottle, this one is definitely worth it!', '0', '2024-05-31 17:32:12.000000', '1');
 
 -- --------------------------------------------------------
 
@@ -196,10 +243,28 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orbitusers`
+--
+ALTER TABLE `orbitusers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`Id`);
+
+--
+-- Indexes for table `product_meta`
+--
+ALTER TABLE `product_meta`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `service`
@@ -230,10 +295,28 @@ ALTER TABLE `category`
   MODIFY `id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
+-- AUTO_INCREMENT for table `orbitusers`
+--
+ALTER TABLE `orbitusers`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `product_meta`
+--
+ALTER TABLE `product_meta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `service`

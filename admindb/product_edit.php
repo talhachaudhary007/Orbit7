@@ -42,23 +42,17 @@ $rec= mysqli_fetch_array($select);
                             <div id="ProdImages"></div>
                         </div>
                        <script>
-                        $("#ProdImages").load('php/updateProduct.php?productId=<?php echo $productID; ?>');
+                        $("#ProdImages").load('php/updateProduct.php?p=<?php echo $productID; ?>');
                        </script>
                        <!--  -->
                        
 
-                                            <!--  -->
                         </div>
                         <div class="card-body pb-4">
                             <input type="file" id="file-input" class="form-control" name="upload_mfiles[]" multiple>
                             <div id="preview-container"></div>
                         </div>
-                    </div>
 
-                   <!-- ajax for delete -->
-                  
-
-                    <!-- script ends -->
 
         <!-- basic card information starts -->
 

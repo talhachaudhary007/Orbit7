@@ -28,9 +28,9 @@ if(isset($_GET['id'])){
         <div class="border-0 mb-4">
             <div
                 class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
-                <h3 class="fw-bold mb-0">Services List</h3>
-                <a href="service_add.php" class="btn btn-primary py-2 px-5 btn-set-task w-sm-100"><i
-                        class="icofont-plus-circle me-2 fs-6"></i> Add Service</a>
+                <h3 class="fw-bold mb-0">Product List</h3>
+                <a href="product_add.php" class="btn btn-primary py-2 px-5 btn-set-task w-sm-100"><i
+                        class="icofont-plus-circle me-2 fs-6"></i> Add Product</a>
             </div>
         </div>
     </div>
